@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Ingredient;
+use App\Entity\Ingredient; 
 use App\Form\IngredientTypeForm;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -72,5 +72,23 @@ final class IngredientController extends AbstractController
         return $this->render('pages/ingredient/edit.html.twig', [
             'form' => $form,
         ]);
+    }
+
+    #[Route('/ingredient/remove/{id}', 'ingredient_remove', methods: ['GET'])]
+    public function remove(
+        Request $request,
+        EntityManagerInterface $manager,
+        Ingredient $ingredient
+    ): Response
+    {
+        $manager->remove($ingredient);
+        $manager->flush();
+
+        $this->addFlash(
+            type: 'success',
+            message: 'L\'ingrédient a été supprimé !'
+        );
+
+        return $this->redirectToRoute(route: 'app_ingredient');
     }
 }
