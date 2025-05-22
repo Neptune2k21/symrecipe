@@ -36,9 +36,8 @@
                             <li class="list-group-item">Créée le : {{ recipe.createdAt|date('d/m/Y') }}</li>
                         </ul>
                         <div class="card-body">
-                            <a href="#" class="btn btn-primary">Voir</a>
                             <a href="{{ path('recipe_edit', { id: recipe.id }) }}" class="btn btn-info">Éditer</a>
-                            <a href="#" class="btn btn-danger">Supprimer</a>
+                            <a href="{{ path('recipe_delete', { id: recipe.id }) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?')">Supprimer</a>
                         </div>
                     </div>
                 </div>
