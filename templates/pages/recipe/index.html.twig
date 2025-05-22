@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes recettes{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-dismissible alert-success mt-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+        
+        <h1>Mes recettes</h1>
+
+        <div class="count mb-3">
+            Il y a {{ recipes.getTotalItemCount }} recette(s)
+        </div>
+
+        <a href="#" class="btn btn-primary mb-3">Créer une recette</a>
+
+        <div class="row">
+            {% for recipe in recipes %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            Recette n°{{ loop.index + ((recipes.currentPageNumber - 1) * recipes.itemNumberPerPage) }}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ recipe.name }}</h5>
+                            <p class="card-text">{{ recipe.description|slice(0, 100) }}{% if recipe.description|length > 100 %}...{% endif %}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Difficulté : {{ recipe.diffculty }}/5</li>
+                            <li class="list-group-item">Pour {{ recipe.nbPersons }} personne(s)</li>
+                            <li class="list-group-item">Prix : {% if recipe.price %}{{ recipe.price }} €{% else %}Non renseigné{% endif %}</li>
+                            <li class="list-group-item">Créée le : {{ recipe.createdAt|date('d/m/Y') }}</li>
+                        </ul>
+                        <div class="card-body">
+                            <a href="#" class="btn btn-primary">Voir</a>
+                            <a href="#" class="btn btn-info">Éditer</a>
+                            <a href="#" class="btn btn-danger">Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12 text-center mt-4">
+                    <p>Aucune recette trouvée</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        {# Pagination controls #}
+        <div class="navigation mt-4">
+            {{ knp_pagination_render(recipes) }}
+        </div>
+    </div>
+{% endblock %}
