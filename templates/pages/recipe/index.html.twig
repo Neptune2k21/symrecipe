@@ -16,7 +16,7 @@
             Il y a {{ recipes.getTotalItemCount }} recette(s)
         </div>
 
-        <a href="#" class="btn btn-primary mb-3">Créer une recette</a>
+        <a href="{{ path('recipe_new') }}" class="btn btn-primary mb-3">Créer une recette</a>
 
         <div class="row">
             {% for recipe in recipes %}
