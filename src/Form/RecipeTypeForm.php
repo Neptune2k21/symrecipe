@@ -113,7 +113,7 @@ class RecipeTypeForm extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-primary mt-4'
                 ],
-                'label' => 'Créer ma recette'
+                'label' => isset($options['data']) && $options['data']->getId() ? 'Modifier ma recette' : 'Créer ma recette'
             ])
         ;
     }
